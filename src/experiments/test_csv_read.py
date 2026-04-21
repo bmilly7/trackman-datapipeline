@@ -1,31 +1,47 @@
-
-from src.ingestion.load_csv import load_trackman_csv #function loads raw file
-from src.cleaning.clean_shots import clean_trackman_data #function that cleans uneeded rows
-from src.cleaning.normalize import normalize_column_names #function that standardizes dataframe (column names ect)
-from src.validation.validate_schema import (validate_required_columns, report_optional_columns,)
 import pandas as pd
-#a basic practice file to read a test csv file of some limited trackman data
+
+from src.ingestion.load_csv import load_trackman_csv
+from src.cleaning.clean_shots import clean_trackman_data
+from src.cleaning.normalize import normalize_column_names
+from src.validation.validate_schema import (
+    validate_required_columns,
+    report_optional_columns,
+)
+from src.filtering.filter_shots import filter_trackman_shots
 
 pd.set_option("display.max_columns", None)
 pd.set_option("display.width", None)
 
-
-#build a path to the experimental csv file
-
 file_path = "data/raw/session03-19-26(session03-19-26).csv"
 
-
-#call functions from connected files
 df = load_trackman_csv(file_path)
 clean_df = clean_trackman_data(df)
-normalize_df = normalize_column_names(clean_df)
+normalized_df = normalize_column_names(clean_df)
 
-validate_required_columns(normalize_df)
-report_optional_columns(normalize_df)
+validate_required_columns(normalized_df)
+report_optional_columns(normalized_df)
 
+filtered_df = filter_trackman_shots(normalized_df)
 
+print("\nFiltered Data Preview:")
+print(
+    filtered_df[
+        [
+            "date",
+            "club",
+            "ball_speed",
+            "smash_factor",
+            "spin_rate",
+            "carry_flat_length",
+            "use_in_stat",
+            "included_in_analysis",
+            "exclusion_reason",
+        ]
+    ].head(30)
+)
 
+print("\nIncluded in analysis counts:")
+print(filtered_df["included_in_analysis"].value_counts(dropna=False))
 
-print(normalize_df.head())
 print("\nColumns:")
-print(normalize_df.columns.tolist())
+print(filtered_df.columns.tolist())
