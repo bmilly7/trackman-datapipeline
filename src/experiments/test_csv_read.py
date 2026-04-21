@@ -1,14 +1,8 @@
-'''
-file_path = "data/raw/session03-19-26(session03-19-26).csv"
 
-with open(file_path, "r", encoding="latin1") as f:
-    for _ in range(3):
-        print(repr(f.readline()))
-
-'''
 from src.ingestion.load_csv import load_trackman_csv #function loads raw file
 from src.cleaning.clean_shots import clean_trackman_data #function that cleans uneeded rows
 from src.cleaning.normalize import normalize_column_names #function that standardizes dataframe (column names ect)
+from src.validation.validate_schema import (validate_required_columns, report_optional_columns,)
 import pandas as pd
 #a basic practice file to read a test csv file of some limited trackman data
 
@@ -25,6 +19,9 @@ file_path = "data/raw/session03-19-26(session03-19-26).csv"
 df = load_trackman_csv(file_path)
 clean_df = clean_trackman_data(df)
 normalize_df = normalize_column_names(clean_df)
+
+validate_required_columns(normalize_df)
+report_optional_columns(normalize_df)
 
 
 
