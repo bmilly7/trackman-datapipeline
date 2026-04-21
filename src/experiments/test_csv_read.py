@@ -8,6 +8,7 @@ from src.validation.validate_schema import (
     report_optional_columns,
 )
 from src.filtering.filter_shots import filter_trackman_shots
+from src.analytics.compute_metrics import compute_session_metrics
 
 pd.set_option("display.max_columns", None)
 pd.set_option("display.width", None)
@@ -22,6 +23,7 @@ validate_required_columns(normalized_df)
 report_optional_columns(normalized_df)
 
 filtered_df = filter_trackman_shots(normalized_df)
+metrics_df = compute_session_metrics(filtered_df)
 
 print("\nFiltered Data Preview:")
 print(
@@ -37,11 +39,14 @@ print(
             "included_in_analysis",
             "exclusion_reason",
         ]
-    ].head(30)
+    ].head(10)
 )
 
 print("\nIncluded in analysis counts:")
 print(filtered_df["included_in_analysis"].value_counts(dropna=False))
 
-print("\nColumns:")
-print(filtered_df.columns.tolist())
+print("\nSession Metrics Preview:")
+print(metrics_df.head(10))
+
+print("\nMetrics Columns:")
+print(metrics_df.columns.tolist())
