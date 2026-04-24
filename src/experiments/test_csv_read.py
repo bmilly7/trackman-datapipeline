@@ -9,6 +9,7 @@ from src.validation.validate_schema import (
 )
 from src.filtering.filter_shots import filter_trackman_shots
 from src.analytics.compute_metrics import compute_session_metrics
+from src.analytics.trend_analysis import compute_trend_analysis
 
 pd.set_option("display.max_columns", None)
 pd.set_option("display.width", None)
@@ -24,6 +25,7 @@ report_optional_columns(normalized_df)
 
 filtered_df = filter_trackman_shots(normalized_df)
 metrics_df = compute_session_metrics(filtered_df)
+trend_df = compute_trend_analysis(metrics_df)
 
 print("\nFiltered Data Preview:")
 print(
@@ -50,3 +52,9 @@ print(metrics_df.head(10))
 
 print("\nMetrics Columns:")
 print(metrics_df.columns.tolist())
+
+print("\nTrend Analysis Preview:")
+print(trend_df.head(10))
+
+print("\nTrend Columns:")
+print(trend_df.columns.tolist())
