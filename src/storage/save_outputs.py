@@ -19,6 +19,7 @@ def save_pipeline_outputs(
     processed_shots_df: pd.DataFrame,
     session_metrics_df: pd.DataFrame,
     trend_analysis_df: pd.DataFrame,
+    insight_labels_df: pd.DataFrame,
     output_dir: str = "data/processed",
 ) -> None:
     """
@@ -40,4 +41,9 @@ def save_pipeline_outputs(
     save_dataframe(
         trend_analysis_df,
         str(output_path / "trend_analysis.csv"),
+    )
+
+    save_dataframe(
+        insight_labels_df,
+        str(output_path / "insight_labels.csv"),
     )
