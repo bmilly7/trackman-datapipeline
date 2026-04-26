@@ -13,7 +13,7 @@ INSIGHT_LABELS_PATH = PROCESSED_DIR / "insight_labels.csv"
 
 
 st.set_page_config(
-    page_title="TrackMan Performance Dashboard",
+    page_title="Trackman Performance Dashboard",
     layout="wide",
 )
 
