@@ -36,7 +36,7 @@ def load_data():
     return processed_shots, session_metrics, trend_analysis, insight_labels
 
 
-st.title("TrackMan Performance Data Pipeline Dashboard")
+st.title("Trackman Performance Data Pipeline Dashboard")
 
 st.write(
     "This dashboard displays performance trends generated from processed TrackMan session data."
